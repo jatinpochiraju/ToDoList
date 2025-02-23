@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 350px;
+            background: #252526;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 10px;
+            background: #333;
+            color: white;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #0078D7;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            background: #333;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+        .delete {
+            background: transparent;
+            border: none;
+            color: #FF4747;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .quote {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #ccc;
+            text-align: center;
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>My Day</h2>
+        <input type="text" id="task" placeholder="Add a task...">
+        <button onclick="addTask()">+</button>
+        <ul id="taskList"></ul>
+    </div>
+    <div class="quote" id="quote"></div>
+    
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("task");
+            let taskValue = taskInput.value.trim();
+            if (taskValue === "") return;
+            
+            let li = document.createElement("li");
+            li.innerHTML = `<span>${taskValue}</span> <button class='delete' onclick='removeTask(this)'>&#10006;</button>`;
+            document.getElementById("taskList").appendChild(li);
+            
+            taskInput.value = "";
+        }
+        
+        function removeTask(element) {
+            element.parentElement.remove();
+        }
+        
+        function fetchQuote() {
+            const quotes = [
+                "Believe you can and you're halfway there.",
+                "Do what you can, with what you have, where you are.",
+                "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+                "The only way to do great work is to love what you do.",
+                "Hardships often prepare ordinary people for an extraordinary destiny."
+            ];
+            
+            let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById("quote").textContent = randomQuote;
+        }
+        
+        fetchQuote();
+        setInterval(fetchQuote, 3600000); // Refresh quote every 1 hour
+    </script>
+</body>
+</html>
